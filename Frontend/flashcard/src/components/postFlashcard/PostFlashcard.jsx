@@ -2,9 +2,14 @@ import React from 'react';
 import useForm from '../customHooks/useForm';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import axios from 'axios';
 
-const PostFlashcard = () => {
-    const { values, handleChange, handleSubmit } = useForm(newCard);
+const PostFlashcard = (props) => {//Probably need to change values into props.values??
+    const { values, handleChange, handleSubmit } = useForm(updateCards);
+
+    const updateCards = () =>{ //ADD NEW CARD TO CURRENT LIST OF FLASHCARDS
+        props.addNewCard(props.collection); //MAKE SURE THE VALUES CLEAN UP AFTER
+    }
 
     return (
         <div>

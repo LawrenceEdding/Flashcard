@@ -1,19 +1,18 @@
-import React { Component } from 'react';
-import { NavBar } from 'react-bootstrap';
-
+import NavBarComponent from "./navBar/navBar";
+import React, { Component } from 'react';
 
 
 class App extends Component {
     state = {
         nothing: null
     }
-
+    
 
     render() {
         return(
-            <NavBar>
-                HELP
-            </NavBar>
+            <div>
+            <NavBarComponent />
+            </div>
         )
     }
 }

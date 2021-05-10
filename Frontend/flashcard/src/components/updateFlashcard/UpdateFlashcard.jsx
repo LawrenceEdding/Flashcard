@@ -26,3 +26,5 @@ const UpdateFlashcard = (props) =>{
         </div>
     );
 }
+
+export default UpdateFlashcard;

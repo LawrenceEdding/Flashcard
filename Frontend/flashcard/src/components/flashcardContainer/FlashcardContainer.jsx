@@ -38,3 +38,5 @@ const FlashcardContainer = (props) => {
         </div>
     )
 }
+
+export default FlashcardContainer

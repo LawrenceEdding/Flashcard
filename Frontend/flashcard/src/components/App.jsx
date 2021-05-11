@@ -19,7 +19,6 @@ class App extends Component {
         this.setState({
             allCollections: response.data
         });
-        console.log(this.state.allCollections)
         this.mapCollections();
     }
     // filterComments(video){//FIXME call me onclick to loading vid.
@@ -30,8 +29,9 @@ class App extends Component {
     //     this.mapComments(renderedComments);
     // }
     mapCollections(){
-        let renderedCollections = this.state.allCollections.map((collection) => {
-            return <CollectionItem key={collection.id} collection={collection}/>
+        let renderedCollections = this.state.allCollections.map((collection, index) => {
+            console.log(index, 'COLLECTIONID')
+            return <CollectionItem key={collection.title} collection={collection} id={index+1}/>
     });
     this.setState({displayCollections: renderedCollections})
     }

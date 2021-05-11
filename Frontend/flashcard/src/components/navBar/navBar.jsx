@@ -2,13 +2,17 @@ import React from 'react';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import CollectionItem from '../collectionItem/CollectionItem';
 
-const NavBarComponent = () => {
+const NavBarComponent = (props) => {
 
     const handleClick = () => {
         
     }
 
+    const viewCollections = () =>{
+        return null;
+    }
 
     return(
         <div>
@@ -17,7 +21,7 @@ const NavBarComponent = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                <Nav.Link href="#features">View Collections</Nav.Link>
+                <Nav.Link onClick={() => viewCollections()}>View Collections</Nav.Link>
                 <Nav.Link href="#pricing">New Collection</Nav.Link>
                 <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

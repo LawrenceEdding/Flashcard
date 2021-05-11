@@ -13,7 +13,6 @@ const CollectionItem = (props) => {
     const [cards, setFlashcards] = useState(null);
 
     const funct = async () =>{
-        
         let response = await axios.get(`http://127.0.0.1:8000/collection/${props.id}/flashcard/`); //TODO put in correct url
         setFlashcards(response.data);
         console.log(props.id, 'funct')

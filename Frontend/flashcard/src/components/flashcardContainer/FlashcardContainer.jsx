@@ -1,8 +1,9 @@
-import React, { Component} from 'react';
+import React, { Component, useCallback} from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import FlashcardItem from '../flashcardItem/FlashcardItem';
 import Card from 'react-bootstrap/esm/Card';
+import PostFlashcard from '../postFlashcard/PostFlashcard';
 
 class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO RENDER
     constructor(props) {
@@ -11,6 +12,7 @@ class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO REND
             cards: null,
             currentCard: 0,
             cardsJSX: [],
+            showPost: false,
         }
         this.goToNextCard = this.goToNextCard.bind(this);
         this.goToPreviousCard = this.goToPreviousCard.bind(this);
@@ -34,8 +36,7 @@ class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO REND
         this.setState({cardsJSX: renderedCards})
     }
 
-    goToNextCard() {
-        console.log('RUNNING NEXT')
+    goToNextCard(){
         let tempflashcard = this.state.currentCard;
         tempflashcard++;
         if(tempflashcard === this.state.cards.length)
@@ -44,7 +45,6 @@ class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO REND
     }
 
     goToPreviousCard(){
-        console.log('RUNNING PREV')
         let tempflashcard = this.state.currentCard;
         tempflashcard--;
         if(tempflashcard < 0)
@@ -53,6 +53,20 @@ class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO REND
         this.setState({currentCard: tempflashcard});
     }
 
+    async addNewCard(flashcard, id){
+        console.log(flashcard, 'Flashcard');
+        await axios.post(`http://127.0.0.1:8000/collection/${id}/flashcard/`, flashcard);
+    }
+
+    displayPost(){
+        if(this.state.showPost){
+            return(
+                <PostFlashcard addNewCard={this.addNewCard} collectionid={this.props.id} update={() =>this.updateCards()}/>
+            )
+        }
+        return null;
+
+    }
 
     render(){
         return (
@@ -75,7 +89,17 @@ class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO REND
                         </td>
                         </tr>
                         <tr>
-                            {this.state.currentCard + 1} of {this.state.cardsJSX.length}
+                            <td>
+                                {this.state.currentCard + 1} of {this.state.cardsJSX.length}
+                            </td>
+                            <td>
+                                <Button onClick={() => this.setState({showPost: !this.state.showPost})}>
+                                    Add New Card
+                                </Button>
+                            </td>                            
+                        </tr>
+                        <tr>
+                        {this.displayPost()}
                         </tr>
                     </tbody>
                 </table>

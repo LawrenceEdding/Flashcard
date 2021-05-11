@@ -1,34 +1,68 @@
-import React from 'react';
+import React, { Component } from 'react';
 import useForm from '../customHooks/useForm';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 
-const PostFlashcard = (props) => {//Probably need to change values into props.values??
-    const { values, handleChange, handleSubmit } = useForm(updateCards);
-
-    const updateCards = () =>{ //ADD NEW CARD TO CURRENT LIST OF FLASHCARDS
-        props.addNewCard(props.collection); //MAKE SURE THE VALUES CLEAN UP AFTER
-    }
-
-    return (
-        <div>
-            <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formTermBasic">
-            <Form.Label>Term</Form.Label>
-            <Form.Control type="name" placeholder="Enter the term" value={values.term} required={true} onChange={handleChange()}/>
-            </Form.Group>
+class PostFlashcard extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+                word: '',
+                definition: ''
+        }
         
-            <Form.Group controlId="formDefinitionBasic">
-            <Form.Label>Definition</Form.Label>
-            <Form.Control as='textarea' placeholder="Define Here" value={values.definition} required={true} onChange={handleChange()}/>
-            </Form.Group>
-            <Button variant="primary" type="submit">
-            Submit
-            </Button>
-        </Form>
-        </div>
-    );
-};
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    
+    async updateCards(card, id){
+        await this.props.addNewCard(card, id);
+        this.props.update();
+    }
+    
+    handleSubmit(event){
+        event.preventDefault();
+        const card = {
+            word: this.state.word,
+            definition: this.state.definition,
+            collection: this.props.collectionid
+        }
+        this.updateCards(card, this.props.collectionid);
+        this.setState({
+            values: {
+                word: '',
+                definition: ''
+            }
+        });
+    }
+    handleChange(event){
+        this.setState({
+            [event.target.name]: event.target.value,
+        });
+    } 
+
+
+    render() {
+        return (
+            <div>
+                <Form onSubmit={this.handleSubmit}>
+                <Form.Group controlId="formTermBasic">
+                <Form.Label>Term</Form.Label>
+                <Form.Control name="word" type="name" placeholder="Enter the term" value={this.state.word} required={true} onChange={this.handleChange}/>
+                </Form.Group>
+            
+                <Form.Group controlId="formDefinitionBasic">
+                <Form.Label>Definition</Form.Label>
+                <Form.Control as='textarea' name='definition' placeholder="Define Here" value={this.state.definition} required={true} onChange={this.handleChange}/>
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                Submit
+                </Button>
+            </Form>
+            </div>
+        );
+    }
+}
 
 export default PostFlashcard;

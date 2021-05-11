@@ -14,8 +14,8 @@ class UpdateFlashcard extends Component{
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     
-    async updateCards(card, collectionid, id){
-        await this.changeCard(card, collectionid, id);
+    async updateCards(card, collectionid, id){ //CANT GRAB CARD ID
+        await this.props.changeCard(card, collectionid, id);
         this.props.update();
     }
     
@@ -26,7 +26,7 @@ class UpdateFlashcard extends Component{
             definition: this.state.definition,
             collection: this.props.collectionid
         }
-        this.updateCards(card, this.props.collectionid);
+        this.updateCards(card, this.props.collectionid, this.props.card.id);
         this.setState({
             values: {
                 word: '',

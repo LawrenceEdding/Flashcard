@@ -77,7 +77,7 @@ class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO REND
     displayPut(){
         if(this.state.showPut){
             return(
-                <UpdateFlashcard addNewCard={this.addNewCard} collectionid={this.props.id} update={() =>this.updateCards()}
+                <UpdateFlashcard changeCard={this.putCard} collectionid={this.props.id} update={() =>this.updateCards()}
                 card={this.state.cards[this.state.currentCard]}/>
             )
         }

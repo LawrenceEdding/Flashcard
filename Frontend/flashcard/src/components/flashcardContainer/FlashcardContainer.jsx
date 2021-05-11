@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import FlashcardItem from '../flashcardItem/FlashcardItem';
 import Card from 'react-bootstrap/esm/Card';
 import PostFlashcard from '../postFlashcard/PostFlashcard';
+import UpdateFlashcard from  '../updateFlashcard/UpdateFlashcard'
 
 class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO RENDER
     constructor(props) {
@@ -13,6 +14,7 @@ class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO REND
             currentCard: 0,
             cardsJSX: [],
             showPost: false,
+            showPut: false,
         }
         this.goToNextCard = this.goToNextCard.bind(this);
         this.goToPreviousCard = this.goToPreviousCard.bind(this);
@@ -69,7 +71,17 @@ class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO REND
             )
         }
         return null;
+    }
 
+
+    displayPut(){
+        if(this.state.showPut){
+            return(
+                <UpdateFlashcard addNewCard={this.addNewCard} collectionid={this.props.id} update={() =>this.updateCards()}
+                card={this.state.cards[this.state.currentCard]}/>
+            )
+        }
+        return null;
     }
 
     render(){
@@ -100,10 +112,18 @@ class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO REND
                                 <Button onClick={() => this.setState({showPost: !this.state.showPost})}>
                                     Add New Card
                                 </Button>
-                            </td>                            
+                            </td>
+                            <td>
+                                <Button onClick={() => this.setState({showPut: !this.state.showPut})}>
+                                    Update Card
+                                </Button>  
+                            </td>                          
                         </tr>
                         <tr>
                         {this.displayPost()}
+                        </tr>
+                        <tr>
+                            {this.displayPut()}
                         </tr>
                     </tbody>
                 </table>

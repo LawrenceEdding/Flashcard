@@ -58,6 +58,10 @@ class FlashcardContainer extends Component {//NEEDS COLLECTION PASSED IN TO REND
         await axios.post(`http://127.0.0.1:8000/collection/${id}/flashcard/`, flashcard);
     }
 
+    async putCard(flashcard, collectionid, id){
+        await axios.put(`http://127.0.0.1:8000/collection/${collectionid}/flashcard/${id}/`, flashcard)
+    }
+
     displayPost(){
         if(this.state.showPost){
             return(
